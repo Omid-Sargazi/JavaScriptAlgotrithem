@@ -27,3 +27,23 @@ function margeTwoArray() {
   console.log(C, "Merged", "length C is:", C.length);
 }
 margeTwoArray();
+
+function binarySearch(target) {
+  let A = [1, 2, 3, 4, 5, 6, 7, 88, 99, 1000, 1001, 1002];
+  let left = 0;
+  let right = A.length;
+  let res = "not found";
+  while (left <= right) {
+    mid = ~~((left + right) / 2);
+    if (target == A[mid]) {
+      res = mid;
+      break;
+    } else if (target < A[mid]) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
+  }
+  return res;
+}
+console.log(binarySearch(1002), "binary");
