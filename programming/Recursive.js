@@ -28,6 +28,7 @@ function BaseTwo(n) {
 
 function deleteRepeatedNumbers() {
   let A = [1, 2, 3, 4, 5, 5, 5, 6, 6, 7, 8, 9, 10];
+  console.log("A:", A);
   let cA = A.length;
   let B = [];
   let cB = 0;
@@ -44,6 +45,12 @@ function deleteRepeatedNumbers() {
       cB++;
     }
   }
+  for (let x = 0; x < ~~(cA / 2); x++) {
+    let temp = A[x];
+    A[x] = A[cA - 1 - x];
+    A[cA - 1 - x] = temp;
+  }
+  console.log("AReverse:", A);
   console.log(B);
 }
 deleteRepeatedNumbers();
