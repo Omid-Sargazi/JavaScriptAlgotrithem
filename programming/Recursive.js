@@ -17,3 +17,9 @@ let A = [1, 2, 30, 1, 1, 1 - 100, 10000000];
 let cA = A.length;
 console.log(Max(A, cA));
 console.log("End Received");
+/////////////////////////Base two with recursively
+function BaseTwo(n) {
+  if (n === 0) return "";
+  else if (n > 0) return BaseTwo(~~(n / 2)) + (n % 2);
+}
+console.log(BaseTwo(4));
