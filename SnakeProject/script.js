@@ -1,7 +1,13 @@
 let body = document.querySelector("body");
 let gameBoard;
+let gridWidth;
+let grideHeight;
+let snake;
 function initialize() {
+  body.innerHTML = "";
   createImageBoard();
+  createSnake(5);
+  drawSnake();
 }
 
 function createImageBoard() {
@@ -10,22 +16,54 @@ function createImageBoard() {
   gameBoard.style.border = "5px groove brown";
   if (window.innerWidth > window.innerHeight) {
     let w, h;
+
     w = parseInt((window.innerWidth * 0.75) / 10) * 10;
     h = parseInt((window.innerHeight - 10) / 10) * 10;
+    grideHeight = h / 10;
+    gridWidth = w / 10;
+
     gameBoard.style.width = w + "px";
     gameBoard.style.height = h + "px";
     gameBoard.style.background = "#0000";
-    gameBoard.style.gridTemplateColumns = "repeat(" + w / 10 + ",10px)";
-    gameBoard.style.gridTemplateRows = "repeat(" + h / 10 + ",10px)";
+    gameBoard.style.gridTemplateColumns = "repeat(" + gridWidth + ",10px)";
+    gameBoard.style.gridTemplateRows = "repeat(" + grideHeight + ",10px)";
   } else {
     let w, h;
+
     w = (parseInt(window.innerWidth - 10) / 10) * 10;
     h = (parseInt(window.innerHeight * 0.75) / 10) * 10;
+    grideHeight = h / 10;
+    gridWidth = w / 10;
+
     gameBoard.style.width = w + "px";
     gameBoard.style.height = h + "px";
-    gameBoard.style.gridTemplateColumns = "repeat(" + h / 10 + ",10px)";
-    gameBoard.style.gridTemplateRows = "repeat(" + w / 10 + ",10px)";
+    gameBoard.style.gridTemplateColumns = "repeat(" + grideHeight + ",10px)";
+    gameBoard.style.gridTemplateRows = "repeat(" + gridWidth + ",10px)";
   }
   body.appendChild(gameBoard);
+}
+
+function createSnake(num) {
+  snake = [];
+  let x = 20;
+  let y = 20;
+  for (let i = 0; i < num; i++) {
+    snake.push([x, y++]);
+  }
+}
+function drawSnake() {
+  gameBoard.innerHTML = "";
+  for (let i = 0; i < snake.length; i++) {
+    let p = document.createElement("span");
+    p.style.display = "block";
+    p.style.width = "10px";
+    p.style.height = "10px";
+    p.style.borderRadius = "5px";
+    p.style.background = "red";
+    p.style.boxShadow = "0 0 2px 0 black";
+    p.style.gridColumn = snake[i][1];
+    p.style.gridRow = snake[i][0];
+    gameBoard.appendChild(p);
+  }
 }
 initialize();
