@@ -3,11 +3,16 @@ let gameBoard;
 let gridWidth;
 let grideHeight;
 let snake;
+let direction;
+let startStopHandler;
+let headX, headY;
 function initialize() {
   body.innerHTML = "";
   createImageBoard();
   createSnake(5);
   drawSnake();
+  direction = "R";
+  startStopHandler = setInterval(move, 100);
 }
 
 function createImageBoard() {
@@ -37,8 +42,8 @@ function createImageBoard() {
 
     gameBoard.style.width = w + "px";
     gameBoard.style.height = h + "px";
-    gameBoard.style.gridTemplateColumns = "repeat(" + grideHeight + ",10px)";
-    gameBoard.style.gridTemplateRows = "repeat(" + gridWidth + ",10px)";
+    gameBoard.style.gridTemplateColumns = "repeat(" + gridWidth + ",10px)";
+    gameBoard.style.gridTemplateRows = "repeat(" + grideHeight + ",10px)";
   }
   body.appendChild(gameBoard);
 }
@@ -48,8 +53,10 @@ function createSnake(num) {
   let x = 20;
   let y = 20;
   for (let i = 0; i < num; i++) {
-    snake.push([x, y++]);
+    snake.push([x++, y]);
   }
+  headX = --x;
+  headY = y;
 }
 function drawSnake() {
   gameBoard.innerHTML = "";
@@ -66,4 +73,47 @@ function drawSnake() {
     gameBoard.appendChild(p);
   }
 }
+
+function move() {
+  switch (direction) {
+    case "R":
+      headX++;
+      break;
+    case "L":
+      headX--;
+      break;
+    case "U":
+      headY--;
+      break;
+    case "D":
+      headY++;
+      break;
+  }
+  for (let i = 0; i < snake.length - 1; i++) {
+    snake[i][0] = snake[i + 1][0];
+    snake[i][1] = snake[i + 1][1];
+  }
+  snake[snake.length - 1][0] = headX;
+  snake[snake.length - 1][1] = headY;
+  drawSnake();
+}
+
+window.addEventListener("keydown", function (e) {
+  //   this.alert(e.keyCode);
+  switch (e.keyCode) {
+    case 37:
+      direction = "L";
+      break;
+    case 38:
+      direction = "U";
+      break;
+    case 39:
+      direction = "R";
+      break;
+    case 40:
+      direction = "D";
+      break;
+  }
+});
+
 initialize();
