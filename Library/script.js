@@ -44,7 +44,7 @@ document
   });
 
 function saveData(type, data) {
-  fetch("/save", {
+  fetch("http://localhost:8001/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
