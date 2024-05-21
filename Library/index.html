@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <h1>Library Management System</h1>
+    <form id="bookForm">
+        <h2>Add Book</h2>
+        <label for="bookTitle">Title:</label>
+        <input type="text" id="bookTitle" name="bookTitle" required><br>
+        <label for="bookAuthor">Author:</label>
+        <input type="text" id="bookAuthor" name="bookAuthor" required><br>
+        <label for="bookISBN">ISBN:</label>
+        <input type="text" id="bookISBN" name="bookISBN" required><br>
+        <button type="submit">Add Book</button>
+    </form>
+
+    <form id="memberForm">
+        <h2>Add Member</h2>
+        <label for="memberName">Name:</label>
+        <input type="text" id="memberName" name="memberName" required><br>
+        <label for="memberID">Member ID:</label>
+        <input type="text" id="memberID" name="memberID" required><br>
+        <button type="submit">Add Member</button>
+    </form>
+
+    <form id="loanForm">
+        <h2>Loan Book</h2>
+        <label for="loanMemberID">Member ID:</label>
+        <input type="text" id="loanMemberID" name="loanMemberID" required><br>
+        <label for="loanBookISBN">Book ISBN:</label>
+        <input type="text" id="loanBookISBN" name="loanBookISBN" required><br>
+        <button type="submit">Loan Book</button>
+    </form>
+
+    <form id="returnForm">
+        <h2>Return Book</h2>
+        <label for="returnMemberID">Member ID:</label>
+        <input type="text" id="returnMemberID" name="returnMemberID" required><br>
+        <label for="returnBookISBN">Book ISBN:</label>
+        <input type="text" id="returnBookISBN" name="returnBookISBN" required><br>
+        <button type="submit">Return Book</button>
+    </form>
+</body>
+</html>
