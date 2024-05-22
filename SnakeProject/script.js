@@ -4,9 +4,11 @@ let gridWidth;
 let grideHeight;
 let snake;
 let direction;
-let startStopHandler;
+let startStopHandler = null;
 let headX, headY;
 let food, foodX, foodY;
+let scoreSpan,
+  scoreAmount = 0;
 function initialize() {
   body.innerHTML = "";
   createImageBoard();
@@ -14,6 +16,7 @@ function initialize() {
   drawSnake();
   insertFood();
   direction = "R";
+  if (startStopHandler != null) clearInterval(startStopHandler);
   startStopHandler = setInterval(move, 100);
 }
 
@@ -21,6 +24,18 @@ function createImageBoard() {
   gameBoard = document.createElement("div");
   gameBoard.style.display = "grid";
   gameBoard.style.border = "5px groove brown";
+  let info = document.createElement("div");
+  info.style.display = "absolute";
+  info.style.background = "gray  ";
+  scoreSpan = document.createElement("span");
+  scoreSpan.style.position = "absolute";
+  scoreSpan.style.right = "5px";
+  scoreSpan.style.top = "5px";
+  scoreSpan.style.background = "yellow";
+  // scoreSpan.style.innerHTML = "0";
+  scoreSpan.innerHTML = "Score :" + scoreAmount;
+  info.appendChild(scoreSpan);
+
   if (window.innerWidth > window.innerHeight) {
     let w, h;
 
@@ -34,6 +49,10 @@ function createImageBoard() {
     gameBoard.style.background = "#0000";
     gameBoard.style.gridTemplateColumns = "repeat(" + gridWidth + ",10px)";
     gameBoard.style.gridTemplateRows = "repeat(" + grideHeight + ",10px)";
+    info.style.width = "23%";
+    info.style.height = "98%";
+    info.style.right = "0";
+    info.style.top = "0";
   } else {
     let w, h;
 
@@ -46,8 +65,12 @@ function createImageBoard() {
     gameBoard.style.height = h + "px";
     gameBoard.style.gridTemplateColumns = "repeat(" + gridWidth + ",10px)";
     gameBoard.style.gridTemplateRows = "repeat(" + grideHeight + ",10px)";
+    info.style.height = "23%";
+    info.style.width = "98%";
+    info.style.bottom = "0";
   }
   body.appendChild(gameBoard);
+  body.appendChild(info);
 }
 
 function createSnake(num) {
@@ -85,6 +108,7 @@ function drawSnake() {
   p.style.gridColumn = foodX;
   p.style.gridRow = foodY;
   gameBoard.appendChild(p);
+  food = p;
 }
 
 function move() {
@@ -106,9 +130,11 @@ function move() {
       if (headY > grideHeight) headY = 1;
       break;
   }
-  for (let i = 0; i < snake.length - 1; i++) {
-    snake[i][0] = snake[i + 1][0];
-    snake[i][1] = snake[i + 1][1];
+  if (check() == 0) {
+    for (let i = 0; i < snake.length - 1; i++) {
+      snake[i][0] = snake[i + 1][0];
+      snake[i][1] = snake[i + 1][1];
+    }
   }
   snake[snake.length - 1][0] = headX;
   snake[snake.length - 1][1] = headY;
@@ -132,6 +158,29 @@ window.addEventListener("keydown", function (e) {
       break;
   }
 });
+function check() {
+  if (headX == foodX && headY == foodY) {
+    snake.push([foodX, foodY]);
+    gameBoard.removeChild(food);
+    insertFood();
+    scoreAmount++;
+    scoreSpan.innerHTML = "Score :" + scoreAmount;
+    return "foodAte";
+  } else if (checkCollision()) {
+    alert("game over");
+    initialize();
+  } else return 0;
+}
+
+function checkCollision() {
+  let flag = false;
+  for (let i = 0; i < snake.length; i++) {
+    if (headX == snake[i][0] && headY == snake[i][1]) {
+      flag = true;
+    }
+  }
+  return flag;
+}
 
 function insertFood() {
   let fx = false;
